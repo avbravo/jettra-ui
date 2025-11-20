@@ -43,8 +43,8 @@ public class Login implements WebComponent {
     private final String contextPath;
     private Alert alert;
     private final Map<String, String> userRoles; // Clave: value (admin), Valor: texto a mostrar (Administrador)
-    private final String loginTitle;
-    private final String applicativeMetaTitle;
+//    private final String loginTitle;
+//    private final String applicativeMetaTitle;
 
     /// Basado en https://flowbite.com/docs/components/forms/
     
@@ -52,12 +52,20 @@ public class Login implements WebComponent {
     
     
     
+//        public Login(String contextPath, Alert alert, Map<String, String> userRoles, LoginInfoUI loginInfoU) {
+//        this.contextPath = contextPath;
+//        this.alert = alert;
+//        this.userRoles = userRoles;
+//        this.loginTitle = loginInfoUI.loginTitle();
+//        this.applicativeMetaTitle = loginInfoUI.applicativeMetaTitle();
+//        this.loginInfoUI = loginInfoUI;
+//    }
+    
         public Login(String contextPath, Alert alert, Map<String, String> userRoles, LoginInfoUI loginInfoU) {
         this.contextPath = contextPath;
         this.alert = alert;
         this.userRoles = userRoles;
-        this.loginTitle = loginInfoUI.loginTitle();
-        this.applicativeMetaTitle = loginInfoUI.applicativeMetaTitle();
+     
         this.loginInfoUI = loginInfoUI;
     }
 
@@ -66,7 +74,7 @@ public class Login implements WebComponent {
         try {
 //            Head head = new Head()
 //                    .add(alert);
-
+System.out.println("\t ::::::: "+loginInfoUI.toString());
             String scriptCode
                     = """
                      tailwind.config = {
@@ -81,7 +89,7 @@ public class Login implements WebComponent {
             Head head = new Head()
                     .add(new Meta().charset("UTF-8"))
                     .add(new Meta().name("viewport").content("width=device-width, initial-scale=1.0"))
-                    .add(new Title(applicativeMetaTitle))
+                    .add(new Title(loginInfoUI.applicativeMetaTitle()))
                     .add(new Script("https://cdn.tailwindcss.com"))
                     .add(new Link().href("https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.1.1/flowbite.min.css").rel("stylesheet"))
                     .add(new Script("https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.1.1/flowbite.min.js"))
@@ -103,14 +111,18 @@ public class Login implements WebComponent {
                             new Svg().id("theme-toggle-light-icon").addClass("hidden w-5 h-5").fill("currentColor").viewBox("0 0 20 20").xmlns("http://www.w3.org/2000/svg")
                                     .add(new SvgPath().d("M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4.356 4.634a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 1.414l-.707.707zM17 10h-1a1 1 0 110-2h1a1 1 0 110 2zm-5.634 4.356a1 1 0 11-1.414 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707zM10 15a1 1 0 01-1-1v-1a1 1 0 112 0v1a1 1 0 01-1 1zM4.644 14.356a1 1 0 111.414-1.414l-.707.707a1 1 0 11-1.414 1.414l-.707-.707zM3 10h1a1 1 0 110 2H3a1 1 0 110-2zm3.634-4.356a1 1 0 011.414 1.414l.707-.707a1 1 0 01-1.414-1.414l-.707.707z"))
                     );
-
-            Div divLogo = new Div("mb-4 rounded-lg overflow-hidden shadow-md")
-                    .add(
-                            new Image().src("https://picsum.photos/400/150").alt("").addClass("w-full h-auto object-cover")
-                    );
+//
+//            Div divLogo = new Div("mb-4 rounded-lg overflow-hidden shadow-md")
+//                    .add(
+//                            new Image().src("https://picsum.photos/400/150").alt("").addClass("w-full h-auto object-cover")
+//                    );
+//            Div divLogo = new Div("mb-4 rounded-lg overflow-hidden shadow-md")
+//                    .add(
+//                            new Image().src(contextPath + loginInfoUI.loginLogoSrc()).alt("").addClass("w-full h-auto object-cover")
+//                    );
 
             Form form = new Form().addClass("max-w-sm mx-auto p-8 bg-white border border-gray-200 rounded-lg shadow-2xl dark:bg-gray-800 dark:border-gray-700");
-            H2 h2 = new H2(loginInfoUI.loginTitle()).addClass("text-2xl font-bold mb-6 text-heading dark:text-white");
+            H2 h2 = new H2(loginInfoUI.loginTitle()+ "Hola").addClass("text-2xl font-bold mb-6 text-heading dark:text-white");
 
             Div divEmail = new Div().addClass("mb-5")
                     .add(new Label("Tu email").forField("email").addClass("block mb-2.5 text-sm font-medium text-heading dark:text-white")
@@ -129,33 +141,37 @@ public class Login implements WebComponent {
                                     .placeholder("••••••••")
                     );
 
-            Select selectRole = new Select()
-                    .name("userRol")
-                    .addClass("bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-brand dark:focus:border-brand")
-                    .required(Boolean.TRUE);
+            Div divRole = new Div();
+            if (userRoles == null || userRoles.isEmpty()) {
 
-            // Opción por defecto
-            selectRole.add(
-                    new Option()
-                            .value("")
-                            .disabled(Boolean.TRUE)
-                            .selected(Boolean.TRUE)
-                            .text("Seleccionar Rol")
-            );
+            } else {
+                Select selectRole = new Select()
+                        .name("userRol")
+                        .addClass("bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-brand dark:focus:border-brand")
+                        .required(Boolean.TRUE);
 
-            // Generar opciones dinámicamente
-            userRoles.forEach((value, text)
-                    -> selectRole.add(new Option()
-                            .value(value)
-                            .text(text))
-            );
+                // Opción por defecto
+                selectRole.add(
+                        new Option()
+                                .value("")
+                                .disabled(Boolean.TRUE)
+                                .selected(Boolean.TRUE)
+                                .text("Seleccionar Rol")
+                );
 
-            Div divRole = new Div().addClass("mb-5")
-                    .add(new Label("Selecciona tu Rol").forField("userRol").addClass("block mb-2.5 text-sm font-medium text-heading dark:text-white")
-                    )
-                    .add(
-                            selectRole
-                    );
+                // Generar opciones dinámicamente
+                userRoles.forEach((value, text)
+                        -> selectRole.add(new Option()
+                                .value(value)
+                                .text(text))
+                );
+                divRole = new Div().addClass("mb-5")
+                        .add(new Label("Selecciona tu Rol").forField("userRol").addClass("block mb-2.5 text-sm font-medium text-heading dark:text-white")
+                        )
+                        .add(
+                                selectRole
+                        );
+            }
 
             Div divRemember = new Div().addClass("flex items-center justify-between mb-5")
                     .add(
@@ -191,13 +207,18 @@ public class Login implements WebComponent {
             form.add(h2);
             form.add(divEmail);
             form.add(divPassword);
-            form.add(divRole);
+            if (userRoles == null || userRoles.isEmpty()) {
+
+            } else {
+                form.add(divRole);
+            }
+
             form.add(divRemember);
             form.add(submit);
             form.add(divFooter);
 
             divMain.add(buttonTheme);
-            divMain.add(divLogo);
+//            divMain.add(divLogo);
             divMain.add(form);
 
             body.add(divMain);
@@ -205,7 +226,7 @@ public class Login implements WebComponent {
             Html html = new Html()
                     .add(head)
                     .add(body);
-     
+
             return html.render();
         } catch (Exception e) {
             System.out.println("Login.render() " + e.getLocalizedMessage());
