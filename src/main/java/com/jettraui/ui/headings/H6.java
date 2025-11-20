@@ -1,0 +1,53 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.jettraui.ui.headings;
+
+import com.jettraui.ui.core.Tag;
+
+/**
+ *
+ * @author avbravo
+ */
+public class H6 extends Tag {
+
+    /**
+     * Color red, blue
+     *
+     * @param tagName
+     * @param color
+     */
+    public H6() {
+
+        super("h6");
+
+    }
+
+       public H6(String text) {
+
+        super("h6");
+    withText(text);
+    }
+    public H6 addClass(String styleClass) {
+
+        withClass(styleClass);
+        return this;
+    }
+
+    public H6 text(String text) {
+        withText(text);
+        return this;
+    }
+
+    public H6 style(String style) {
+        withAttribute("style", style);
+
+        return this;
+    }
+
+    public Tag build() {
+        return this;
+    }
+
+}

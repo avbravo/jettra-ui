@@ -1,0 +1,112 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.jettraui.ui.input;
+
+import com.jettraui.ui.core.Tag;
+import com.jettraui.ui.css.type.CssType;
+
+/**
+ *
+ * @author avbravo
+ */
+public class InputDate extends Tag {
+
+    /**
+     * Color red, blue
+     *
+     * @param tagName
+     * @param color
+     */
+    public InputDate() {
+
+        super("input");
+        withAttribute("type", "date");
+
+    }
+
+    public InputDate(String id, String name, String styleClass) {
+
+        super("input");
+        withAttribute("type", "date");
+        withAttribute("id", id);
+        withAttribute("name", name);
+        if (styleClass == null || styleClass.equals("")) {
+
+        } else {
+            withClass(styleClass);
+        }
+
+    }
+    public InputDate(String id, String name, CssType cssType) {
+
+        super("input");
+        withAttribute("type", "date");
+        withAttribute("id", id);
+        withAttribute("name", name);
+        
+            withClass(getCssTypeInputServices().toCss(cssType));
+       
+
+    }
+
+    
+
+
+    public InputDate text(String text) {
+        withText(text);
+        return this;
+    }
+
+    public InputDate id(String id) {
+        withAttribute("id", id);
+        return this;
+    }
+
+    public InputDate placeholder(String placeholder) {
+        withAttribute("placeholder", placeholder);
+        return this;
+    }
+
+    public InputDate name(String name) {
+        withAttribute("name", name);
+        return this;
+    }
+
+    public InputDate addClass(String withClass) {
+        withClass(withClass);
+        return this;
+    }
+
+    public InputDate value(String value) {
+        withAttribute("value", value);
+        return this;
+    }
+
+    public InputDate step(String step) {
+        withAttribute("step", step);
+        return this;
+    }
+
+    public InputDate readonly(Boolean readonly) {
+        if (readonly) {
+            withAttribute("readonly", "");
+        }
+
+        return this;
+    }
+
+    public InputDate required(Boolean required) {
+        if (required) {
+            withAttribute("required", "true");
+        }
+
+        return this;
+    }
+
+    public Tag build() {
+        return this;
+    }
+
+}
